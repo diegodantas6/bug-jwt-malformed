@@ -2,16 +2,19 @@ const jwt = require('jsonwebtoken')
 const privateKey = 'bug'
 
 const obj1 = {
+    teste: 'obj1',
     name: 'Diego Dantas',
-    username: 'diego.dantas'
+    username: 'diego.dantas',
+    especial: 'mãe 1'
 }
 
 const token = jwt.sign(obj1, privateKey);
 // console.log('token: ' + token);
 
 const obj2 = {
-    test: 'token2',
-    obj1
+    teste: 'obj2',
+    especial: 'mãe 2',
+    token
 }
 
 const token2 = jwt.sign(obj2, privateKey);
@@ -22,4 +25,11 @@ jwt.verify(token2, privateKey, function(err, decoded) {
         return console.error(err)
     
     console.log(decoded)
+
+    jwt.verify(decoded.token, privateKey, function(err, decoded) {
+        if (err)
+            return console.error(err)
+        
+        console.log(decoded)
+    })
 })
